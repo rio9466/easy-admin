@@ -205,7 +205,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">数据统计</span>
           </div>
-          <el-scrollbar class="mt-3">
+          <el-scrollbar class="mt-3" max-height="504">
             <WelcomeTable />
           </el-scrollbar>
         </el-card>
@@ -232,7 +232,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">最新动态</span>
           </div>
-          <el-scrollbar class="mt-3">
+          <el-scrollbar class="mt-3" max-height="504">
             <el-timeline>
               <el-timeline-item
                 v-for="(item, index) in latestNewsData"
@@ -318,9 +318,14 @@ const optionsBasis: Array<OptionsType> = [
   padding-left: 0;
 }
 
-/* 工作台三行：统计卡行按内容高，图表行固定，底部行撑满剩余高度 */
-.dashboard-fill {
-  overflow: hidden auto;
+/* 工作台三行：按内容高度自然排布，整页可纵向滚动 */
+
+/* 工作台根节点不再是滚动容器，整页滚动交给 layout 的 el-scrollbar：
+   layout 的滚动区被固定为 height:100% + overflow:hidden，需要为工作台放开高度约束，
+   `.dashboard-fill` 即用于匹配“当前页面是工作台” */
+:global(.app-main .el-scrollbar__view:has(.dashboard-fill)) {
+  height: auto !important;
+  overflow: visible !important;
 }
 
 .dash-row {
@@ -337,17 +342,7 @@ const optionsBasis: Array<OptionsType> = [
   flex: 0 0 auto;
 }
 
-.dash-row--charts {
-  flex: 0 0 460px;
-  min-height: 440px;
-}
-
-.dash-row--bottom {
-  flex: 1 1 auto;
-  min-height: 140px;
-}
-
 .main-content {
-  margin: 20px 20px 0 !important;
+  margin: 20px !important;
 }
 </style>
