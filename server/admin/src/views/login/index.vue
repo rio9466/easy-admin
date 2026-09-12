@@ -104,9 +104,6 @@ async function onLoginSubmit() {
           <Motion>
             <p class="login-brand">easy-admin</p>
           </Motion>
-          <Motion :delay="50">
-            <h2 class="outline-hidden">管理后台登录</h2>
-          </Motion>
 
           <el-form
             ref="ruleFormRef"
