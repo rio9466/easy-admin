@@ -27,8 +27,12 @@ const optionsBasis: Array<OptionsType> = [
 </script>
 
 <template>
-  <div>
-    <el-row :gutter="24" justify="space-around">
+  <div class="page-fill dashboard-fill">
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--stats"
+    >
       <re-col
         v-for="(item, index) in chartData"
         :key="index"
@@ -89,7 +93,13 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
+    </el-row>
 
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--charts"
+    >
       <re-col
         v-motion
         class="mb-4.5"
@@ -167,7 +177,13 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
+    </el-row>
 
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--bottom"
+    >
       <re-col
         v-motion
         class="mb-4.5"
@@ -252,6 +268,29 @@ const optionsBasis: Array<OptionsType> = [
 :deep(.el-card) {
   --el-card-border-color: none;
 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .el-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* 卡片头固定，不参与压缩 */
+  .el-card__body > div:first-child {
+    flex: 0 0 auto;
+  }
+
+  /* 卡片内的滚动区自适应撑满剩余高度（数据统计 / 最新动态） */
+  .el-card__body > .el-scrollbar {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
+
   /* 解决概率进度条宽度 */
   .el-progress--line {
     width: 85%;
@@ -275,6 +314,29 @@ const optionsBasis: Array<OptionsType> = [
 
 :deep(.el-timeline.is-start) {
   padding-left: 0;
+}
+
+/* 工作台三行：统计卡行按内容高，图表行固定，底部行撑满剩余高度 */
+.dashboard-fill {
+  overflow: hidden auto;
+}
+
+.dash-row {
+  margin-bottom: 0;
+}
+
+.dash-row--stats {
+  flex: 0 0 auto;
+}
+
+.dash-row--charts {
+  flex: 0 0 460px;
+  min-height: 440px;
+}
+
+.dash-row--bottom {
+  flex: 1 1 auto;
+  min-height: 200px;
 }
 
 .main-content {

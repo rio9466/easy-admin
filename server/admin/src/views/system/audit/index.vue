@@ -120,7 +120,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="page-fill">
     <!-- 筛选面板 -->
     <div class="panel-container">
       <div class="panel-body">
@@ -195,55 +195,65 @@ onMounted(() => {
     </div>
 
     <!-- 表格面板 -->
-    <div class="panel-container">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">审计日志（只读）</span>
         <el-button text :loading="loading" @click="loadList">刷新</el-button>
       </div>
       <div class="panel-body table-body">
-        <el-table v-loading="loading" :data="list" stripe>
-          <el-table-column prop="id" label="ID" width="110" />
-          <el-table-column label="结果" width="80">
-            <template #default="{ row }">
-              <el-tag :type="outcomeTag(row.outcome).type" size="small">
-                {{ outcomeTag(row.outcome).text }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="action" label="动作" min-width="170">
-            <template #default="{ row }">
-              <el-tooltip
-                :content="row.action"
-                placement="top"
-                :show-after="400"
-              >
-                <span class="cursor-help">{{
-                  auditActionLabel(row.action)
-                }}</span>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="resource_type"
-            label="资源类型"
-            min-width="130"
-          />
-          <el-table-column prop="resource_id" label="资源 ID" min-width="110" />
-          <el-table-column
-            prop="actor_username"
-            label="操作人"
-            min-width="120"
-          />
-          <el-table-column prop="request_id" label="请求 ID" min-width="180" />
-          <el-table-column prop="event_at" label="事件时间" min-width="170" />
-          <el-table-column label="操作" width="80" fixed="right">
-            <template #default="{ row }">
-              <el-button link type="primary" @click="openDetail(row)">
-                详情
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="table-scroll">
+          <el-table v-loading="loading" :data="list" stripe height="100%">
+            <el-table-column prop="id" label="ID" width="110" />
+            <el-table-column label="结果" width="80">
+              <template #default="{ row }">
+                <el-tag :type="outcomeTag(row.outcome).type" size="small">
+                  {{ outcomeTag(row.outcome).text }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="action" label="动作" min-width="170">
+              <template #default="{ row }">
+                <el-tooltip
+                  :content="row.action"
+                  placement="top"
+                  :show-after="400"
+                >
+                  <span class="cursor-help">{{
+                    auditActionLabel(row.action)
+                  }}</span>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="resource_type"
+              label="资源类型"
+              min-width="130"
+            />
+            <el-table-column
+              prop="resource_id"
+              label="资源 ID"
+              min-width="110"
+            />
+            <el-table-column
+              prop="actor_username"
+              label="操作人"
+              min-width="120"
+            />
+            <el-table-column
+              prop="request_id"
+              label="请求 ID"
+              min-width="180"
+            />
+            <el-table-column prop="event_at" label="事件时间" min-width="170" />
+            <el-table-column label="操作" width="80" fixed="right">
+              <template #default="{ row }">
+                <el-button link type="primary" @click="openDetail(row)">
+                  详情
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
         <div class="flex justify-end pt-3">
           <el-pagination
             background
