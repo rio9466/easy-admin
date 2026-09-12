@@ -344,7 +344,7 @@ const optionsBasis: Array<OptionsType> = [
 
 .dash-row--bottom {
   flex: 1 1 auto;
-  min-height: 200px;
+  min-height: 140px;
 }
 
 .main-content {
