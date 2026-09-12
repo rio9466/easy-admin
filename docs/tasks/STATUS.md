@@ -16,6 +16,7 @@ Status values:
 | --- | ---- | ------ | ---- | ------------ | ------ | ---------------- |
 | admin-brand-ux | 图标替换 + 修改密码弹窗 + 登录页文案 | `admin-brand-ux` | `main-relay` | — | done | 合并提交 `f798990`（--no-ff）；conversation pi 复核通过（typecheck/test/build 绿 + 浏览器实测） |
 | admin-ui-fullscreen | 移除页脚 + 页面撑满视口 + 禁止页面滚动（表格/卡片/工作台） | `admin-ui-fullscreen` | `main-relay` | — | done | 合并提交 `ec7f377`（--no-ff）；conversation pi 复核通过（lint/typecheck/test/build 绿 + 浏览器数字验证） |
+| admin-ui-fixes | 无分页表格底部杂线 + 工作台恢复滚动与下边距 | `admin-ui-fixes` | `main-relay` | `admin-ui-fullscreen` | todo | 任务文档 `docs/tasks/admin-ui-fixes.md` |
 
 ## Update rules
 
