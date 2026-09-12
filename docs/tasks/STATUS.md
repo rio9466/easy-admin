@@ -14,7 +14,7 @@ Status values:
 
 | ID  | Task | Branch | Base | Dependencies | Status | Evidence / notes |
 | --- | ---- | ------ | ---- | ------------ | ------ | ---------------- |
-| admin-brand-ux | 图标替换 + 修改密码弹窗 + 登录页文案 | `admin-brand-ux` | `main-relay` | — | todo | 任务文档 `docs/tasks/admin-brand-ux.md` |
+| admin-brand-ux | 图标替换 + 修改密码弹窗 + 登录页文案 | `admin-brand-ux` | `main-relay` | — | done | 合并提交 `f798990`（--no-ff）；conversation pi 复核通过（typecheck/test/build 绿 + 浏览器实测） |
 
 ## Update rules
 
