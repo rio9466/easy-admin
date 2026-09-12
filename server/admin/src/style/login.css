@@ -43,21 +43,6 @@
   height: 80px;
 }
 
-.login-form h2 {
-  text-transform: uppercase;
-  margin: 15px 0;
-  color: #999;
-  font:
-    bold 200% Consolas,
-    Monaco,
-    monospace;
-}
-
-/* 深色模式：标题改为 Element Plus 主题文字色 */
-.dark-mode .login-form h2 {
-  color: var(--el-text-color-primary);
-}
-
 @media screen and (max-width: 1180px) {
   .login-container {
     grid-gap: 9rem;
@@ -65,11 +50,6 @@
 
   .login-form {
     width: 290px;
-  }
-
-  .login-form h2 {
-    font-size: 2.4rem;
-    margin: 8px 0;
   }
 
   .img img {

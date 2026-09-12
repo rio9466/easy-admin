@@ -11,11 +11,9 @@ request/response shapes on their own; if the contract is missing something, stop
 
 ## Execution order
 
-_No tasks yet._ The orchestrator fills this section when the first PRD is decomposed.
-
 | ID | Document | Branch | Base | Dependencies |
 | -- | -------- | ------ | ---- | ------------ |
-| —  | —        | —      | —    | —            |
+| admin-brand-ux | [`admin-brand-ux.md`](admin-brand-ux.md) | `admin-brand-ux` | `main-relay` | — |
 
 ## Common acceptance requirements (all tasks)
 
