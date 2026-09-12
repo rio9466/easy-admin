@@ -14,7 +14,7 @@ Status values:
 
 | ID  | Task | Branch | Base | Dependencies | Status | Evidence / notes |
 | --- | ---- | ------ | ---- | ------------ | ------ | ---------------- |
-| —   | —    | —      | —    | —            | —      | —                |
+| admin-brand-ux | 图标替换 + 修改密码弹窗 + 登录页文案 | `admin-brand-ux` | `main-relay` | — | todo | 任务文档 `docs/tasks/admin-brand-ux.md` |
 
 ## Update rules
 
