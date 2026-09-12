@@ -121,6 +121,8 @@ const transitionMain = defineComponent({
               :view-style="{
                 display: 'flex',
                 flex: 'auto',
+                height: '100%',
+                'min-height': 0,
                 overflow: 'hidden',
                 'flex-direction': 'column'
               }"

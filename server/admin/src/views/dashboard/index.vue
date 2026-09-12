@@ -205,7 +205,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">数据统计</span>
           </div>
-          <el-scrollbar max-height="504" class="mt-3">
+          <el-scrollbar class="mt-3">
             <WelcomeTable />
           </el-scrollbar>
         </el-card>
@@ -232,7 +232,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">最新动态</span>
           </div>
-          <el-scrollbar max-height="504" class="mt-3">
+          <el-scrollbar class="mt-3">
             <el-timeline>
               <el-timeline-item
                 v-for="(item, index) in latestNewsData"
@@ -265,6 +265,8 @@ const optionsBasis: Array<OptionsType> = [
 </template>
 
 <style lang="scss" scoped>
+@import url("@/style/business.scss");
+
 :deep(.el-card) {
   --el-card-border-color: none;
 
@@ -322,6 +324,12 @@ const optionsBasis: Array<OptionsType> = [
 }
 
 .dash-row {
+  margin-bottom: 0;
+}
+
+/* 行间距统一由 .page-fill 的 16px gap 提供，避免与 mb-4.5 叠加 */
+:deep(.dash-row > .el-col) {
+  height: 100%;
   margin-bottom: 0;
 }
 
