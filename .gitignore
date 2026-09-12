@@ -1,0 +1,18 @@
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+.agents/
+.cursor/
+
+# Dependencies
+node_modules/
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+*.local.*
+
+# Conversation pi persistent memory — local only, never committed
+CONVERSATION_MEMORY.md
