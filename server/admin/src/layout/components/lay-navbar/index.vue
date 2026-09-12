@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 import { useNav } from "@/layout/hooks/useNav";
+import ChangePasswordDialog from "@/components/ChangePasswordDialog/index.vue";
 import LaySearch from "../lay-search/index.vue";
 import LayNavMix from "../lay-sidebar/NavMix.vue";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
@@ -30,6 +32,14 @@ const {
 
 function goProfile() {
   router.push("/profile/index");
+}
+
+const changePasswordDialogRef = ref<InstanceType<
+  typeof ChangePasswordDialog
+> | null>(null);
+
+function openChangePassword() {
+  changePasswordDialogRef.value?.open();
 }
 </script>
 
@@ -75,7 +85,7 @@ function goProfile() {
               <IconifyIconOffline :icon="UserLine" style="margin: 5px" />
               个人中心
             </el-dropdown-item>
-            <el-dropdown-item @click="goProfile">
+            <el-dropdown-item @click="openChangePassword">
               <IconifyIconOffline :icon="LockLine" style="margin: 5px" />
               修改密码
             </el-dropdown-item>
@@ -97,6 +107,8 @@ function goProfile() {
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
+
+    <ChangePasswordDialog ref="changePasswordDialogRef" />
   </div>
 </template>
 
