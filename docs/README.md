@@ -7,11 +7,13 @@ Ownership rules live in the root `AGENTS.md` and `ORCA_WORKFLOW.md`. Summary:
 | `docs/prd/`   | Product requirements (what/why, cross-cutting)      | `main-relay` (main line)   |
 | `docs/api/`   | Frontend ↔ service API contract notes (cross-cutting) | `main-relay` (main line) |
 | `docs/adr/`   | Architecture decision records                       | `main-relay` (main line)   |
-| `docs/specs/` | Per-area feature specs                              | the area's branch          |
 | `docs/tasks/` | One executable task per agent                       | the task's branch          |
 
 Cross-cutting documents (PRD, ADR, architecture) must be written from a `main-relay`
 terminal. Task branches must refuse to create or edit them and redirect to `main-relay`.
+
+Area specs are **not** stored here: they live in the area (`server/docs/`, or the area's own
+docs), as stated in `ORCA_WORKFLOW.md` §4.
 
 The service's own documentation stays where it already is:
 
