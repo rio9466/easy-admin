@@ -287,7 +287,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="page-fill">
     <!-- 操作/筛选面板 -->
     <div class="panel-container">
       <div class="panel-body">
@@ -318,81 +318,87 @@ onMounted(() => {
     </div>
 
     <!-- 表格面板 -->
-    <div class="panel-container">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">管理员列表</span>
         <el-button text :loading="loading" @click="loadList">刷新</el-button>
       </div>
       <div class="panel-body table-body">
-        <el-table v-loading="loading" :data="list" stripe>
-          <el-table-column prop="id" label="ID" width="80" />
-          <el-table-column prop="username" label="账号" min-width="120" />
-          <el-table-column
-            prop="display_name"
-            label="显示名称"
-            min-width="140"
-          />
-          <el-table-column label="状态" width="90">
-            <template #default="{ row }">
-              <el-tag :type="row.enabled ? 'success' : 'danger'" size="small">
-                {{ row.enabled ? "启用" : "禁用" }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="角色" min-width="180">
-            <template #default="{ row }">
-              <el-tag
-                v-for="code in row.role_codes"
-                :key="code"
-                size="small"
-                class="mr-1"
-                :type="code === 'super_admin' ? 'warning' : 'info'"
-              >
-                {{ roleName(code) }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="created_at" label="创建时间" min-width="170" />
-          <el-table-column label="操作" width="280" fixed="right">
-            <template #default="{ row }">
-              <el-button
-                v-perms="['admin.user.update']"
-                link
-                type="primary"
-                @click="openEdit(row)"
-              >
-                编辑
-              </el-button>
-              <el-button
-                v-perms="['admin.user.disable']"
-                link
-                type="warning"
-                :disabled="isSelf(row)"
-                @click="openToggle(row)"
-              >
-                {{ row.enabled ? "禁用" : "启用" }}
-              </el-button>
-              <el-button
-                v-perms="['admin.user.reset_password']"
-                link
-                type="danger"
-                :disabled="isSelf(row)"
-                @click="openReset(row)"
-              >
-                重置密码
-              </el-button>
-              <el-button
-                v-perms="['admin.user.assign_role']"
-                link
-                type="primary"
-                :disabled="isSelf(row)"
-                @click="openAssignRoles(row)"
-              >
-                分配角色
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="table-scroll">
+          <el-table v-loading="loading" :data="list" stripe height="100%">
+            <el-table-column prop="id" label="ID" width="80" />
+            <el-table-column prop="username" label="账号" min-width="120" />
+            <el-table-column
+              prop="display_name"
+              label="显示名称"
+              min-width="140"
+            />
+            <el-table-column label="状态" width="90">
+              <template #default="{ row }">
+                <el-tag :type="row.enabled ? 'success' : 'danger'" size="small">
+                  {{ row.enabled ? "启用" : "禁用" }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="角色" min-width="180">
+              <template #default="{ row }">
+                <el-tag
+                  v-for="code in row.role_codes"
+                  :key="code"
+                  size="small"
+                  class="mr-1"
+                  :type="code === 'super_admin' ? 'warning' : 'info'"
+                >
+                  {{ roleName(code) }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="created_at"
+              label="创建时间"
+              min-width="170"
+            />
+            <el-table-column label="操作" width="280" fixed="right">
+              <template #default="{ row }">
+                <el-button
+                  v-perms="['admin.user.update']"
+                  link
+                  type="primary"
+                  @click="openEdit(row)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                  v-perms="['admin.user.disable']"
+                  link
+                  type="warning"
+                  :disabled="isSelf(row)"
+                  @click="openToggle(row)"
+                >
+                  {{ row.enabled ? "禁用" : "启用" }}
+                </el-button>
+                <el-button
+                  v-perms="['admin.user.reset_password']"
+                  link
+                  type="danger"
+                  :disabled="isSelf(row)"
+                  @click="openReset(row)"
+                >
+                  重置密码
+                </el-button>
+                <el-button
+                  v-perms="['admin.user.assign_role']"
+                  link
+                  type="primary"
+                  :disabled="isSelf(row)"
+                  @click="openAssignRoles(row)"
+                >
+                  分配角色
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
         <div class="flex justify-end pt-3">
           <el-pagination
             background

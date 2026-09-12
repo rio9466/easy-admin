@@ -225,8 +225,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="panel-container">
+  <div class="page-fill">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">系统设置</span>
         <el-button text :loading="loading" @click="loadSettings"
@@ -459,8 +459,10 @@ onMounted(async () => {
 /* 左分类导航 + 右表单 */
 .settings-layout {
   display: flex;
+  flex: 1 1 auto;
   gap: 24px;
   align-items: stretch;
+  min-height: 0;
 }
 
 .settings-nav {
@@ -469,6 +471,8 @@ onMounted(async () => {
   flex-direction: column;
   gap: 4px;
   width: 200px;
+  min-height: 0;
+  overflow: auto;
 }
 
 .settings-nav-item {
@@ -507,9 +511,11 @@ onMounted(async () => {
 }
 
 .settings-form {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   max-width: 640px;
+  min-height: 0;
+  overflow: auto;
 }
 
 .settings-section-title {
