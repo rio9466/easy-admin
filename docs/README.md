@@ -24,5 +24,5 @@ The service's own documentation stays where it already is:
 Current documents:
 
 - [`tasks/README.md`](tasks/README.md) — task index and execution order (to be filled by the
-  orchestrator).
+  conversation pi).
 - [`tasks/STATUS.md`](tasks/STATUS.md) — task status ledger.
