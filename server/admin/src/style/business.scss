@@ -61,6 +61,14 @@
   min-height: 240px;
 }
 
+/* 无分页器的表格卡片：表体撑满卡片后，EP 画的 1px 底边线会变成卡片底部的一条杂线 */
+.table-body:not(:has(.el-pagination))
+  .table-scroll
+  :deep(.el-table__inner-wrapper)::before,
+.table-body:not(:has(.el-pagination)) .table-scroll :deep(.el-table)::before {
+  display: none;
+}
+
 /* 次要文字：替代 text-gray-* 的硬编码浅色 */
 .text-secondary {
   color: var(--el-text-color-secondary);
