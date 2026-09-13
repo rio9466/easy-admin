@@ -30,8 +30,43 @@
   padding: 16px;
 }
 
+/* 页面撑满骨架：页面根节点使用，纵向铺满标签栏以下的可用高度 */
+.page-fill {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+/* 需要撑满剩余高度的面板（表格卡片 / 个人中心 / 系统设置） */
+.panel-fill {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* 表格滚动容器：表头固定、表体在卡片内部滚动 */
+.table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .table-body {
-  min-height: 300px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 240px;
+}
+
+/* 无分页器的表格卡片：表体撑满卡片后，EP 画的 1px 底边线会变成卡片底部的一条杂线 */
+.table-body:not(:has(.el-pagination))
+  .table-scroll
+  :deep(.el-table__inner-wrapper)::before,
+.table-body:not(:has(.el-pagination)) .table-scroll :deep(.el-table)::before {
+  display: none;
 }
 
 /* 次要文字：替代 text-gray-* 的硬编码浅色 */

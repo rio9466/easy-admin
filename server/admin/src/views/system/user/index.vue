@@ -444,7 +444,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="page-fill">
     <!-- 筛选/操作面板 -->
     <div class="panel-container">
       <div class="panel-body">
@@ -499,122 +499,128 @@ onMounted(() => {
     </div>
 
     <!-- 用户表格 -->
-    <div class="panel-container">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">业务用户列表</span>
         <el-button text :loading="loading" @click="loadList">刷新</el-button>
       </div>
       <div class="panel-body table-body">
-        <el-table v-loading="loading" :data="list" stripe>
-          <el-table-column prop="id" label="ID" width="76" />
-          <el-table-column prop="username" label="用户名" min-width="120" />
-          <el-table-column
-            prop="email"
-            label="邮箱"
-            min-width="190"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="nickname"
-            label="昵称"
-            min-width="110"
-            show-overflow-tooltip
-          />
-          <el-table-column label="状态" width="92">
-            <template #default="{ row }">
-              <el-tag :type="statusType[row.status] ?? 'info'" size="small">
-                {{ statusText[row.status] ?? row.status }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="可用积分" width="100" align="right">
-            <template #default="{ row }">
-              <el-tooltip :content="row.points_balance" placement="top">
-                <span>{{ formatPoints(row.points_balance) }}</span>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column label="累积消费" width="100" align="right">
-            <template #default="{ row }">
-              <el-tooltip :content="row.consumption_points" placement="top">
-                <span>{{ formatPoints(row.consumption_points) }}</span>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column label="等级" min-width="120">
-            <template #default="{ row }">
-              <span>{{ levelNameOf(row) }}</span>
-              <el-tag
-                v-if="row.level?.mode === 'manual'"
-                size="small"
-                type="warning"
-                class="ml-1"
-              >
-                手动
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="registration_ip" label="注册 IP" width="120" />
-          <el-table-column label="最后登录" min-width="160">
-            <template #default="{ row }">
-              {{
-                row.last_login_at
-                  ? new Date(row.last_login_at).toLocaleString()
-                  : "—"
-              }}
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="372" fixed="right">
-            <template #default="{ row }">
-              <el-button
-                v-perms="['admin.customer.update']"
-                link
-                type="primary"
-                @click="openEdit(row)"
-              >
-                编辑
-              </el-button>
-              <el-button
-                v-perms="['admin.customer.disable']"
-                link
-                :type="row.status === 'active' ? 'warning' : 'success'"
-                @click="openToggle(row)"
-              >
-                {{ row.status === "active" ? "禁用" : "启用" }}
-              </el-button>
-              <el-button
-                v-perms="['admin.customer.reset_password']"
-                link
-                type="danger"
-                @click="openReset(row)"
-              >
-                重置密码
-              </el-button>
-              <el-button
-                v-perms="['admin.customer.points']"
-                link
-                type="primary"
-                @click="openAdjustPoints(row)"
-              >
-                调积分
-              </el-button>
-              <el-button
-                v-perms="['admin.customer.points']"
-                link
-                @click="openLedger(row)"
-              >
-                账本
-              </el-button>
-              <el-button
-                v-perms="['admin.customer.level_assign']"
-                link
-                @click="openAssignLevel(row)"
-              >
-                设等级
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="table-scroll">
+          <el-table v-loading="loading" :data="list" stripe height="100%">
+            <el-table-column prop="id" label="ID" width="76" />
+            <el-table-column prop="username" label="用户名" min-width="120" />
+            <el-table-column
+              prop="email"
+              label="邮箱"
+              min-width="190"
+              show-overflow-tooltip
+            />
+            <el-table-column
+              prop="nickname"
+              label="昵称"
+              min-width="110"
+              show-overflow-tooltip
+            />
+            <el-table-column label="状态" width="92">
+              <template #default="{ row }">
+                <el-tag :type="statusType[row.status] ?? 'info'" size="small">
+                  {{ statusText[row.status] ?? row.status }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="可用积分" width="100" align="right">
+              <template #default="{ row }">
+                <el-tooltip :content="row.points_balance" placement="top">
+                  <span>{{ formatPoints(row.points_balance) }}</span>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column label="累积消费" width="100" align="right">
+              <template #default="{ row }">
+                <el-tooltip :content="row.consumption_points" placement="top">
+                  <span>{{ formatPoints(row.consumption_points) }}</span>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column label="等级" min-width="120">
+              <template #default="{ row }">
+                <span>{{ levelNameOf(row) }}</span>
+                <el-tag
+                  v-if="row.level?.mode === 'manual'"
+                  size="small"
+                  type="warning"
+                  class="ml-1"
+                >
+                  手动
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="registration_ip"
+              label="注册 IP"
+              width="120"
+            />
+            <el-table-column label="最后登录" min-width="160">
+              <template #default="{ row }">
+                {{
+                  row.last_login_at
+                    ? new Date(row.last_login_at).toLocaleString()
+                    : "—"
+                }}
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="372" fixed="right">
+              <template #default="{ row }">
+                <el-button
+                  v-perms="['admin.customer.update']"
+                  link
+                  type="primary"
+                  @click="openEdit(row)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                  v-perms="['admin.customer.disable']"
+                  link
+                  :type="row.status === 'active' ? 'warning' : 'success'"
+                  @click="openToggle(row)"
+                >
+                  {{ row.status === "active" ? "禁用" : "启用" }}
+                </el-button>
+                <el-button
+                  v-perms="['admin.customer.reset_password']"
+                  link
+                  type="danger"
+                  @click="openReset(row)"
+                >
+                  重置密码
+                </el-button>
+                <el-button
+                  v-perms="['admin.customer.points']"
+                  link
+                  type="primary"
+                  @click="openAdjustPoints(row)"
+                >
+                  调积分
+                </el-button>
+                <el-button
+                  v-perms="['admin.customer.points']"
+                  link
+                  @click="openLedger(row)"
+                >
+                  账本
+                </el-button>
+                <el-button
+                  v-perms="['admin.customer.level_assign']"
+                  link
+                  @click="openAssignLevel(row)"
+                >
+                  设等级
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
         <div class="flex justify-end pt-3">
           <el-pagination
             background

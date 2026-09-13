@@ -70,8 +70,9 @@ Responsibilities:
   first.
 - **Cross-cutting approvals** — approve changes to the PRD, ADRs, architecture, the contract,
   and process/rule files (authored on `main-relay`).
-- **Persistent memory** — keep a durable, local memory of project facts, conventions, and the
-  user's preferences and habits, and read it at the start of every session (see
+- **Persistent memory** — keep a durable memory of project facts, conventions, and the
+  user's preferences and habits (an Obsidian note when Obsidian is installed, otherwise a
+  git-ignored local file), and read it at the start of every session (see
   *Persistent memory and user preferences* below).
 
 It must not:
@@ -90,8 +91,9 @@ existing project being adopted into the workflow**, then follow
 `docs/adopting-orca-workflow.md`.
 
 - **New project** — scaffold the governance docs (`AGENTS.md`, `ORCA_WORKFLOW.md`, `docs/`
-  skeleton), create the branches (`main`, `main-relay`), create a git-ignored
-  `CONVERSATION_MEMORY.md`, then plan the first tasks.
+  skeleton), create the branches (`main`, `main-relay`), set up the memory note (the Obsidian
+  vault if installed, otherwise a git-ignored `CONVERSATION_MEMORY.md`), then plan the first
+  tasks.
 - **Existing project** — audit the repo, add or adapt the governance docs, create `main-relay`
   from the current default branch, tag a baseline, and record facts in memory.
 
@@ -131,16 +133,27 @@ orca terminal send --terminal <handle> --text "<task brief>" --enter --json
 
 #### Persistent memory and user preferences
 
-The conversation pi keeps durable memory across sessions in a single, **local, git-ignored**
-file at the repo root:
+The conversation pi keeps durable memory across sessions. **If Obsidian is installed on the
+user's machine, the memory lives in an Obsidian note; otherwise it falls back to a local,
+git-ignored file.**
 
-```
-CONVERSATION_MEMORY.md
-```
+Detection and storage:
 
-- It is listed in the root `.gitignore` and **must never be committed**.
-- Because it is untracked, it lives in whichever checkout the conversation pi runs in (the
-  `main` main checkout) and is not shared through git.
+1. Detect Obsidian — macOS: `/Applications/Obsidian.app` and/or
+   `~/Library/Application Support/obsidian/obsidian.json` (lists vaults; the entry with
+   `open: true` is the user's active vault).
+2. In the active vault, find `CONVERSATION_MEMORY.md` — **create it if missing; merge into the
+   matching section if present** (never overwrite other sections). Organize it with Obsidian
+   `[[wikilinks]]` so it connects in the **graph view**: a hub note linking section notes such
+   as `[[用户偏好]]`, `[[项目事实]]`, `[[约定与坑]]`, `[[轻量决策]]`, each linking back to the hub.
+3. All future memory writes go to that note. It is the source of truth.
+4. One vault can hold several projects. Keep this project's notes together in a folder named
+   after the project (`easy-admin-main/`): the hub plus its section notes, linked with bare
+   `[[…]]` links (Obsidian resolves them to the folder siblings). Never write this project's
+   facts into another project's notes — merge only the sections that are genuinely user-wide.
+
+Fallback (no Obsidian): keep the git-ignored `CONVERSATION_MEMORY.md` at the repo root (listed
+in `.gitignore`, never committed).
 
 What to keep there:
 
@@ -149,7 +162,10 @@ What to keep there:
   conventions, review style, and any correction the user repeats.
 - **Project facts** — branch model, release baseline and tags, service ports, datastores and
   connection details, external dependencies, environment quirks.
-- **Conventions and pitfalls**.
+- **Conventions and pitfalls** — e.g. pnpm 12 native-binary install, the root `.gitignore`
+  `docs/` trap that hid `server/docs/`, `auth.trusted_origins` and the `30001` forbidden error,
+  Orca's `branchPrefix` creating `<owner>/<task>` branches, external (non-Orca) worktrees being
+  hidden in the sidebar.
 - **Lightweight decisions and rationale** — decisions too small for an ADR.
 
 When to read and write it:
@@ -161,8 +177,8 @@ When to read and write it:
 
 Boundaries:
 
-- `CONVERSATION_MEMORY.md` is the conversation pi's own memory; executors do not read or write
-  it.
+- The memory (the Obsidian note, or the fallback file) is the conversation pi's own; executors
+  do not read or write it.
 - It is not a product document: the PRD holds product requirements, `docs/tasks/STATUS.md`
   holds the task ledger, and this memory holds the assistant's durable context and the user
   profile.

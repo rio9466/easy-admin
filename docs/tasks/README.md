@@ -14,6 +14,8 @@ request/response shapes on their own; if the contract is missing something, stop
 | ID | Document | Branch | Base | Dependencies |
 | -- | -------- | ------ | ---- | ------------ |
 | admin-brand-ux | [`admin-brand-ux.md`](admin-brand-ux.md) | `admin-brand-ux` | `main-relay` | — |
+| admin-ui-fullscreen | [`admin-ui-fullscreen.md`](admin-ui-fullscreen.md) | `admin-ui-fullscreen` | `main-relay` | — |
+| admin-ui-fixes | [`admin-ui-fixes.md`](admin-ui-fixes.md) | `admin-ui-fixes` | `main-relay` | `admin-ui-fullscreen`（已合并 `ec7f377`） |
 
 ## Common acceptance requirements (all tasks)
 

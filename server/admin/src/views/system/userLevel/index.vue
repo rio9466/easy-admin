@@ -158,8 +158,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="panel-container">
+  <div class="page-fill">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">用户等级</span>
         <div class="flex items-center gap-2">
@@ -181,55 +181,57 @@ onMounted(() => {
           class="mb-3"
           title="自动等级按累积消费积分选取“阈值 ≤ 消费”的最高已启用等级；两个已启用等级不可共用同一阈值。停用等级不会影响已有手动分配记录。"
         />
-        <el-table v-loading="loading" :data="list" stripe>
-          <el-table-column prop="id" label="ID" width="76" />
-          <el-table-column prop="code" label="编码" min-width="110" />
-          <el-table-column prop="name" label="名称" min-width="120" />
-          <el-table-column label="阈值（累积消费）" width="160" align="right">
-            <template #default="{ row }">
-              <span>{{ row.threshold_points }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="sort_order"
-            label="排序"
-            width="80"
-            align="center"
-          />
-          <el-table-column label="状态" width="92">
-            <template #default="{ row }">
-              <el-tag :type="row.enabled ? 'success' : 'danger'" size="small">
-                {{ row.enabled ? "启用" : "停用" }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="icon_url"
-            label="图标 URL"
-            min-width="160"
-            show-overflow-tooltip
-          />
-          <el-table-column label="操作" width="150" fixed="right">
-            <template #default="{ row }">
-              <el-button
-                v-perms="['admin.user_level.manage']"
-                link
-                type="primary"
-                @click="openEdit(row)"
-              >
-                编辑
-              </el-button>
-              <el-button
-                v-perms="['admin.user_level.manage']"
-                link
-                :type="row.enabled ? 'warning' : 'success'"
-                @click="openToggle(row)"
-              >
-                {{ row.enabled ? "停用" : "启用" }}
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="table-scroll">
+          <el-table v-loading="loading" :data="list" stripe height="100%">
+            <el-table-column prop="id" label="ID" width="76" />
+            <el-table-column prop="code" label="编码" min-width="110" />
+            <el-table-column prop="name" label="名称" min-width="120" />
+            <el-table-column label="阈值（累积消费）" width="160" align="right">
+              <template #default="{ row }">
+                <span>{{ row.threshold_points }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="sort_order"
+              label="排序"
+              width="80"
+              align="center"
+            />
+            <el-table-column label="状态" width="92">
+              <template #default="{ row }">
+                <el-tag :type="row.enabled ? 'success' : 'danger'" size="small">
+                  {{ row.enabled ? "启用" : "停用" }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="icon_url"
+              label="图标 URL"
+              min-width="160"
+              show-overflow-tooltip
+            />
+            <el-table-column label="操作" width="150" fixed="right">
+              <template #default="{ row }">
+                <el-button
+                  v-perms="['admin.user_level.manage']"
+                  link
+                  type="primary"
+                  @click="openEdit(row)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                  v-perms="['admin.user_level.manage']"
+                  link
+                  :type="row.enabled ? 'warning' : 'success'"
+                  @click="openToggle(row)"
+                >
+                  {{ row.enabled ? "停用" : "启用" }}
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
 

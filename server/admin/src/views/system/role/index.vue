@@ -176,7 +176,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="page-fill">
     <!-- 操作面板 -->
     <div class="panel-container">
       <div class="panel-body">
@@ -201,68 +201,70 @@ onMounted(() => {
     </div>
 
     <!-- 表格面板 -->
-    <div class="panel-container">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">角色列表</span>
         <el-button text :loading="loading" @click="loadList">刷新</el-button>
       </div>
       <div class="panel-body table-body">
-        <el-table v-loading="loading" :data="list" stripe>
-          <el-table-column prop="code" label="角色代码" min-width="130" />
-          <el-table-column prop="name" label="名称" min-width="150" />
-          <el-table-column
-            prop="description"
-            label="描述"
-            min-width="180"
-            show-overflow-tooltip
-          />
-          <el-table-column label="类型" width="90">
-            <template #default="{ row }">
-              <el-tag size="small" :type="row.built_in ? 'warning' : 'info'">
-                {{ row.built_in ? "内置" : "自定义" }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="状态" width="80">
-            <template #default="{ row }">
-              <el-tag size="small" :type="row.enabled ? 'success' : 'danger'">
-                {{ row.enabled ? "启用" : "禁用" }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="权限" min-width="220">
-            <template #default="{ row }">
-              <span class="text-xs text-secondary">
-                {{ rolePermissionNames(row) }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-if="canManage"
-            label="操作"
-            width="180"
-            fixed="right"
-          >
-            <template #default="{ row }">
-              <el-button
-                v-perms="['admin.role.manage']"
-                link
-                type="primary"
-                @click="openEdit(row)"
-              >
-                编辑
-              </el-button>
-              <el-button
-                v-perms="['admin.role.manage']"
-                link
-                type="primary"
-                @click="openAssignPermissions(row)"
-              >
-                分配权限
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="table-scroll">
+          <el-table v-loading="loading" :data="list" stripe height="100%">
+            <el-table-column prop="code" label="角色代码" min-width="130" />
+            <el-table-column prop="name" label="名称" min-width="150" />
+            <el-table-column
+              prop="description"
+              label="描述"
+              min-width="180"
+              show-overflow-tooltip
+            />
+            <el-table-column label="类型" width="90">
+              <template #default="{ row }">
+                <el-tag size="small" :type="row.built_in ? 'warning' : 'info'">
+                  {{ row.built_in ? "内置" : "自定义" }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="状态" width="80">
+              <template #default="{ row }">
+                <el-tag size="small" :type="row.enabled ? 'success' : 'danger'">
+                  {{ row.enabled ? "启用" : "禁用" }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="权限" min-width="220">
+              <template #default="{ row }">
+                <span class="text-xs text-secondary">
+                  {{ rolePermissionNames(row) }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-if="canManage"
+              label="操作"
+              width="180"
+              fixed="right"
+            >
+              <template #default="{ row }">
+                <el-button
+                  v-perms="['admin.role.manage']"
+                  link
+                  type="primary"
+                  @click="openEdit(row)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                  v-perms="['admin.role.manage']"
+                  link
+                  type="primary"
+                  @click="openAssignPermissions(row)"
+                >
+                  分配权限
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
 

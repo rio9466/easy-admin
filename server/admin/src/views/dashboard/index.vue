@@ -27,8 +27,12 @@ const optionsBasis: Array<OptionsType> = [
 </script>
 
 <template>
-  <div>
-    <el-row :gutter="24" justify="space-around">
+  <div class="page-fill dashboard-fill">
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--stats"
+    >
       <re-col
         v-for="(item, index) in chartData"
         :key="index"
@@ -89,7 +93,13 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
+    </el-row>
 
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--charts"
+    >
       <re-col
         v-motion
         class="mb-4.5"
@@ -167,7 +177,13 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
+    </el-row>
 
+    <el-row
+      :gutter="24"
+      justify="space-around"
+      class="dash-row dash-row--bottom"
+    >
       <re-col
         v-motion
         class="mb-4.5"
@@ -189,7 +205,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">数据统计</span>
           </div>
-          <el-scrollbar max-height="504" class="mt-3">
+          <el-scrollbar class="mt-3" max-height="504">
             <WelcomeTable />
           </el-scrollbar>
         </el-card>
@@ -216,7 +232,7 @@ const optionsBasis: Array<OptionsType> = [
           <div class="flex justify-between">
             <span class="text-md font-medium">最新动态</span>
           </div>
-          <el-scrollbar max-height="504" class="mt-3">
+          <el-scrollbar class="mt-3" max-height="504">
             <el-timeline>
               <el-timeline-item
                 v-for="(item, index) in latestNewsData"
@@ -249,8 +265,33 @@ const optionsBasis: Array<OptionsType> = [
 </template>
 
 <style lang="scss" scoped>
+@import url("@/style/business.scss");
+
 :deep(.el-card) {
   --el-card-border-color: none;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .el-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* 卡片头固定，不参与压缩 */
+  .el-card__body > div:first-child {
+    flex: 0 0 auto;
+  }
+
+  /* 卡片内的滚动区自适应撑满剩余高度（数据统计 / 最新动态） */
+  .el-card__body > .el-scrollbar {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
 
   /* 解决概率进度条宽度 */
   .el-progress--line {
@@ -277,7 +318,31 @@ const optionsBasis: Array<OptionsType> = [
   padding-left: 0;
 }
 
+/* 工作台三行：按内容高度自然排布，整页可纵向滚动 */
+
+/* 工作台根节点不再是滚动容器，整页滚动交给 layout 的 el-scrollbar：
+   layout 的滚动区被固定为 height:100% + overflow:hidden，需要为工作台放开高度约束，
+   `.dashboard-fill` 即用于匹配“当前页面是工作台” */
+:global(.app-main .el-scrollbar__view:has(.dashboard-fill)) {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.dash-row {
+  margin-bottom: 0;
+}
+
+/* 行间距统一由 .page-fill 的 16px gap 提供，避免与 mb-4.5 叠加 */
+:deep(.dash-row > .el-col) {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.dash-row--stats {
+  flex: 0 0 auto;
+}
+
 .main-content {
-  margin: 20px 20px 0 !important;
+  margin: 20px !important;
 }
 </style>

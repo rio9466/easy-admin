@@ -63,9 +63,9 @@ async function saveDisplayName() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="page-fill">
     <!-- 个人资料面板 -->
-    <div class="panel-container">
+    <div class="panel-container panel-fill">
       <div class="panel-header">
         <span class="panel-title">个人资料</span>
       </div>

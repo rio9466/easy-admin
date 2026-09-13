@@ -48,7 +48,7 @@
 | `docs/tasks/README.md` + `STATUS.md` | 任务索引与状态台账 | 主线 |
 | `docs/tasks/<ID>.md` | 每个任务一份（独立、可执行） | 任务分支 |
 | 各区域 `AGENTS.md` | 每个区域的编码规则 | 该区域分支 |
-| `CONVERSATION_MEMORY.md` | 对话 pi 的本地记忆（**gitignored，不提交**） | 本地 |
+| 对话 pi 的长期记忆 | 优先写在 Obsidian vault（`CONVERSATION_MEMORY.md` 枢纽 + 子笔记）；没装 Obsidian 时回退为仓库根的 `CONVERSATION_MEMORY.md`（**gitignored，不提交**） | 本地 / vault |
 
 > 关键点：`AGENTS.md` / `ORCA_WORKFLOW.md` 是“强规定”，agent 打开就自动读到；其余按需。
 
@@ -65,7 +65,8 @@
    `docs/prd/*`、`docs/api/*` 换成你的内容。
 4. **建集成分支**：`git branch main-relay main`（并按需在 Orca 建 worktree）。
 5. **定义区域**：确定项目的 area，每个 area 放一个 `AGENTS.md`，在根 `AGENTS.md`/`ORCA_WORKFLOW.md` 登记。
-6. **建本地记忆**：仓库根 `CONVERSATION_MEMORY.md` 并加进 `.gitignore`。
+6. **建记忆**：装了 Obsidian 就写 vault 的 `CONVERSATION_MEMORY.md`（枢纽 + 子笔记，见 §6）；
+   否则在仓库根建 `CONVERSATION_MEMORY.md` 并加进 `.gitignore`。
 7. **开始**：对话 pi 写 PRD → 拆任务文档 → 建任务分支/worktree → 派发执行 pi → 验收合并。
 
 ### B. 老项目接入工作流
@@ -74,12 +75,27 @@
 2. **补治理文档**：加入/改造 `AGENTS.md`、`ORCA_WORKFLOW.md`、`docs/` 骨架与各区域 `AGENTS.md`。
 3. **建集成分支**：从默认分支建 `main-relay`；任务从 `main-relay` 切、合回 `main-relay`。
 4. **打基线标签**：在当前状态打一个 `vX.Y.Z`，作为接入点（此前提交与本次接入解耦）。
-5. **建本地记忆**：`CONVERSATION_MEMORY.md`（git-ignored），记录项目事实、坑与约定。
+5. **建记忆**：同 §6——装了 Obsidian 就写 vault，否则用仓库根 `CONVERSATION_MEMORY.md`（git-ignored），
+   记录项目事实、坑与约定。
 6. **开始**：对话 pi 写 PRD/任务 → 建任务 worktree → 派发执行 pi → 验收合并。
 
 ## 6. 对话 pi 的持久记忆
 
-在仓库根放一个**本地、git-ignored** 的 `CONVERSATION_MEMORY.md`，记录：
+**优先写入 Obsidian**（如果用户机器上装了）：
+
+1. 检测 Obsidian：macOS 下 `/Applications/Obsidian.app` 和/或
+   `~/Library/Application Support/obsidian/obsidian.json`（列出 vault，`open:true` 为当前 vault）。
+2. 在当前 vault 里找 `CONVERSATION_MEMORY.md`：不存在就**新建**；存在就**合并到对应小节**（不要覆盖其它小节）。
+   用 Obsidian **双链 `[[...]]`** 组织成「枢纽 + 子笔记」（如 [[用户偏好]]、[[项目事实]]、[[约定与坑]]、[[轻量决策]]，
+   子笔记回链枢纽），这样在**关系图谱**里有连接、可跳转。
+3. 之后所有记忆写入都放这个笔记（它是主存储）。
+4. 一个 vault 可能同时放着多个项目：把本项目的笔记集中放在以项目名命名的文件夹（`easy-admin-main/`）里
+   （枢纽 + 子笔记），用裸 `[[...]]` 链接（Obsidian 会解析到同文件夹的兄弟笔记）。
+   不要把本项目的项目事实写进别的项目的笔记里。
+
+**回退**：没装 Obsidian 时，用仓库根目录的本地、git-ignored `CONVERSATION_MEMORY.md`。
+
+记录内容：
 
 - 用户偏好与习惯（语言、简洁度、是否先给方案、合并是否需授权、命名/端口约定、派发偏好）；
 - 项目事实（分支模型、发布基线、端口、数据库、外部依赖）；
